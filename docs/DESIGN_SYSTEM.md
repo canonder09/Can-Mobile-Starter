@@ -61,6 +61,11 @@ light: { accent: '#7CC000', accentPressed: '#69A300', accentMuted: '#F0F9DD', ac
 Set `primaryFollowsAccent = true` if the brand wants accent-filled primary buttons.
 No component changes are required.
 
+When a product needs more than an accent change, decide the direction in
+`docs/DESIGN_DIRECTION.md` and evolve the tokens (`typography.ts` + `fonts.ts`,
+`radius.ts`, `spacing.ts`, `motion.ts`) with a comment on when to use them.
+Components stay as they are; they read tokens at render time.
+
 ## 2. Typography
 
 | Family | Role | Rule |
