@@ -30,8 +30,14 @@ The agent sees `Project Status: TEMPLATE` in `docs/PRODUCT.md`, follows
 `docs/KICKOFF.md`, and runs a short adaptive discovery (typically 3–6 rounds)
 covering product, users, primary journey, screens, navigation, visual
 direction, data and backend. It proposes options with recommendations, records
-decisions in `docs/`, presents a Project Blueprint for your approval, then
-implements in vertical slices on mock services.
+decisions in `docs/`, and presents a Project Blueprint for your approval.
+
+After approval the agent follows `docs/EXECUTION.md`: it rebuilds the app
+shell from your flows, builds one meaningful vertical slice on the existing
+design system (with its service contract and mock when the slice needs
+persistence), validates it, then repeats the pattern for the rest. Backend
+providers come later, behind that service boundary. Configuration and secrets
+follow `docs/ENVIRONMENT.md`.
 
 - **Skip it:** say "Skip discovery and implement this." The agent starts coding
   and records only the minimum context.
@@ -58,9 +64,11 @@ src/theme/            design tokens, ThemeProvider — edit brand.ts to rebrand
 src/components/ui/    generic primitives (Button, Card, Input, ListItem, BottomSheet, …)
 src/features/         product features; gallery/ is the dev reference gallery
 src/services/         contracts/ · mock/ · <provider>/ — empty until the product needs it
+src/config/           env.ts — public runtime config, the only reader of EXPO_PUBLIC_*
 src/hooks | lib | utils | types
 docs/                 KICKOFF · PRODUCT · FLOWS · DESIGN_DIRECTION · DATA_MODEL · BACKEND
-                      DESIGN_SYSTEM · ARCHITECTURE · COMPONENTS · NEW_PROJECT_CHECKLIST
+                      EXECUTION · ENVIRONMENT · DESIGN_SYSTEM · ARCHITECTURE · COMPONENTS
+                      NEW_PROJECT_CHECKLIST
 AGENTS.md             rules for AI agents (Claude Code, Codex, Cursor); CLAUDE.md references it
 ```
 

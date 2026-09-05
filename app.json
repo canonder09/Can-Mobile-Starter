@@ -43,9 +43,6 @@
           }
         }
       ]
-    ],
-    "extra": {
-      "appEnv": "development"
-    }
+    ]
   }
 }

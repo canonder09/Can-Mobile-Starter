@@ -3,7 +3,7 @@ Project Status: TEMPLATE
 # Product
 
 Source of truth for what this product is and what has been decided. Read the
-status line first in every new session; `docs/KICKOFF.md` §10 explains how to
+status line first in every new session; `docs/KICKOFF.md` §8 explains how to
 resume from each value.
 
 ## Project status

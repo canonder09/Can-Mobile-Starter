@@ -2,6 +2,7 @@ import React from 'react';
 import { ScrollView, View } from 'react-native';
 import Constants from 'expo-constants';
 import { Card, Chip, Header, ListItem, Screen, Section, Text, useToast } from '@/components/ui';
+import { env } from '@/config/env';
 import { hapticError, hapticLight, hapticSuccess } from '@/lib/haptics';
 import { useTheme, type SchemePreference } from '@/theme';
 
@@ -15,7 +16,6 @@ export default function SettingsScreen() {
   const { preference, setPreference, isDark, space, sectionGap } = useTheme();
   const toast = useToast();
   const version = Constants.expoConfig?.version ?? '—';
-  const env = process.env.EXPO_PUBLIC_APP_ENV ?? 'development';
 
   return (
     <Screen gap={0} header={<Header variant="display" title="Settings" subtitle={`Appearance · ${isDark ? 'dark' : 'light'}`} />}>
@@ -59,7 +59,7 @@ export default function SettingsScreen() {
           <Card variant="filled">
             <View style={{ gap: space[1] }}>
               <Text variant="sub" color="textSecondary">Version {version}</Text>
-              <Text variant="sub" color="textSecondary">Environment {env}</Text>
+              <Text variant="sub" color="textSecondary">Environment {env.appEnv}</Text>
               <Text variant="sub" color="textSecondary">Expo SDK {Constants.expoConfig?.sdkVersion ?? '—'}</Text>
             </View>
           </Card>

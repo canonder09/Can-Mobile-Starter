@@ -22,7 +22,8 @@ This file is the single source of truth for how to work in this project.
 | `src/features/<name>/` | Product features: `components/`, `hooks/`, `types.ts`, optional `screens/`. |
 | `src/services/` | Data access behind contracts: `contracts/` (interfaces), `mock/` (first implementation), `<provider>/` (real backend, when chosen). Empty until the product needs persistence. |
 | `src/hooks/`, `src/lib/`, `src/utils/`, `src/types/` | Shared, non-visual helpers. |
-| `docs/` | Design system, architecture, components, checklist; product docs (`PRODUCT`, `FLOWS`, `DESIGN_DIRECTION`, `DATA_MODEL`, `BACKEND`) and the kickoff protocol (`KICKOFF`). |
+| `src/config/` | Public runtime configuration. `env.ts` is the only file that reads `EXPO_PUBLIC_*` (see `docs/ENVIRONMENT.md`). |
+| `docs/` | Design system, architecture, components, checklist; product docs (`PRODUCT`, `FLOWS`, `DESIGN_DIRECTION`, `DATA_MODEL`, `BACKEND`), discovery (`KICKOFF`), implementation (`EXECUTION`) and configuration (`ENVIRONMENT`). |
 
 ## Project Kickoff Protocol
 
@@ -62,6 +63,32 @@ and is the first thing to read in any new session.
   copy an example product, role, screen, color, entity or backend into a project.
 - The engineering rules below apply during and after discovery.
 
+## Implementation Protocol
+
+- `BLUEPRINT_APPROVED` (or any later status) means discovery is over: do not
+  reopen it. Read `docs/EXECUTION.md` before any major implementation step.
+- Align first: compare `FLOWS`, `DESIGN_DIRECTION`, `DATA_MODEL` and `BACKEND`
+  with the code, then build. Set `IMPLEMENTING` when the first product code lands.
+- The starter tabs (Home, Gallery, Settings) are a development reference, not
+  the product's information architecture. Rebuild the app shell from
+  `FLOWS.md`; keep the Gallery in the repo but out of production navigation.
+- Start with one meaningful vertical slice from the Blueprint, not every
+  screen. Validate it (`npm run check`, bundle, device smoke test, both color
+  schemes, all states) before scaling the pattern to the remaining features.
+- If that slice needs persistence, define its feature types, service contract
+  and mock as part of building it — not UI first and a retrofit later. If it
+  does not, add no contract: local-only stays local-only.
+- Persistence boundaries exist only where real data, a backend, device storage
+  or an external API is involved. Contracts are domain-specific
+  (`<Domain>Service`), never generic CRUD or DI machinery.
+- Feature and UI code never import a provider SDK and never see provider
+  objects; it consumes plain domain types through `@/services`. Provider
+  failures become app-meaningful errors at the service boundary.
+- Prefer mocks when they let the UX be built and reviewed before the backend
+  exists; they are a tool, not a requirement, and their data never ships.
+- Public configuration is read only through `src/config/env.ts`. Details in
+  `docs/EXECUTION.md` and `docs/ENVIRONMENT.md`.
+
 ## Rules
 
 1. **Check `src/components/ui` first.** Never create a second Button, Card, Input,
@@ -98,7 +125,9 @@ and is the first thing to read in any new session.
 12. **Read before you write.** Look at neighboring files and `docs/ARCHITECTURE.md`
     before introducing a pattern. Match existing naming and folder conventions.
 13. **Secrets:** only `EXPO_PUBLIC_*` variables reach the bundle and they are
-    public. Real values live in `.env` (git-ignored); `.env.example` has placeholders only.
+    public — a git-ignored `.env` does not make them secret. Read them only
+    through `src/config/env.ts`. Real values live in `.env` (git-ignored);
+    `.env.example` has placeholders only. See `docs/ENVIRONMENT.md`.
 14. **Keep the gallery current.** When you add or change a primitive, add or
     update its example in `src/features/gallery/sections`.
 

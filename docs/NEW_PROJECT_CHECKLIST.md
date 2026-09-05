@@ -31,8 +31,8 @@ around that. `Project Status` in `docs/PRODUCT.md` tracks where you are.
 
 ## 4. Environment
 
-- [ ] Copy `.env.example` → `.env`; fill `EXPO_PUBLIC_*` values. Never commit `.env`.
-- [ ] Keep `.env.example` updated with placeholders when adding variables.
+- [ ] Copy `.env.example` → `.env`; fill `EXPO_PUBLIC_*` values. Never commit `.env`. They are public, not secrets: `docs/ENVIRONMENT.md`.
+- [ ] New public variables go through `src/config/env.ts`; keep `.env.example` updated with placeholders.
 
 ## 5. Agents
 
@@ -40,12 +40,12 @@ around that. `Project Status` in `docs/PRODUCT.md` tracks where you are.
 - [ ] Claude Code: `.claude/settings.json` enables `expo@claude-plugins-official`; run `/mcp` to sign in to Expo if you want EAS/docs tools.
 - [ ] Codex and Cursor: `AGENTS.md` is picked up automatically from the repo root.
 
-## 6. App shell and first slice — status `IMPLEMENTING`
+## 6. App shell and first slice — status `IMPLEMENTING` (`docs/EXECUTION.md`)
 
 - [ ] Rename/replace the tabs in `app/(tabs)/_layout.tsx` from the navigation architecture in `FLOWS.md` (keep ≤ 4 tabs).
 - [ ] Replace `app/(tabs)/index.tsx` with the real primary screen; its hierarchy is in `DESIGN_DIRECTION.md`.
 - [ ] Keep the Gallery out of production navigation using the cleanest Expo Router option for your shell (a dev-only tab, a `__DEV__` gate, a hidden route); leave `src/features/gallery` in the repo for development.
-- [ ] Build the first vertical slice end to end on mock services; validate (both schemes, loading / empty / error) before widening.
+- [ ] Build the first vertical slice end to end: feature types → service contract → mock → UI when it needs persistence, plain local state when it does not. Validate (`npm run check`, bundle, device smoke test, both schemes, all states) before widening.
 
 ## 7. Services — status `BACKEND_INTEGRATION`
 

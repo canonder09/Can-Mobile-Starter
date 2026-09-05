@@ -17,9 +17,10 @@ mock → provider) is in `src/services/README.md`.
 
 `docs/PRODUCT.md` (starting with its `Project Status` line), `FLOWS.md`,
 `DESIGN_DIRECTION.md`, `DATA_MODEL.md` and `BACKEND.md` describe *this*
-product. `docs/KICKOFF.md` describes how an agent fills them in and how an
-approved Blueprint maps onto the folders below. Read the status line before
-touching code in a new session.
+product. `docs/KICKOFF.md` describes how an agent fills them in;
+`docs/EXECUTION.md` describes how an approved Blueprint maps onto the folders
+below and becomes code; `docs/ENVIRONMENT.md` covers configuration and
+secrets. Read the status line before touching code in a new session.
 
 ## Folder layout
 
@@ -32,14 +33,15 @@ app/                     routes only (Expo Router)
 src/
   theme/                 tokens + ThemeProvider (brand.ts is the re-skin entry point)
   components/ui/         generic primitives, one folder per component + barrel index.ts
-  features/<name>/       product features (components/, hooks/, types.ts, screens/)
+  features/<name>/       product features (components/, hooks/, types.ts, utils/, screens/ — only what is needed)
     gallery/             dev-only reference gallery (registry + sections)
   hooks/                 shared hooks (useDebouncedValue, useSheetAction)
   lib/                   thin wrappers around native modules (haptics)
   utils/                 pure helpers (initials, number)
   services/              data access: contracts/ · mock/ · <provider>/ — empty until needed
   types/                 shared types (AsyncState, Maybe)
-docs/                    design system, architecture, components, checklist, kickoff + product docs
+  config/                env.ts — public runtime configuration, the only reader of EXPO_PUBLIC_*
+docs/                    design system, architecture, components, checklist, kickoff, execution, environment, product docs
 assets/                  icon, splash, adaptive icon (replace per project)
 ```
 

@@ -113,7 +113,8 @@ no collections, tables or schemas yet.
 notifications, server-side logic, analytics, offline, security. Firebase,
 Supabase, a REST or GraphQL API, local-only, or "none yet" are all conscious
 choices; nothing is assumed. Prefer the smallest backend the MVP needs.
-Mock-first (§9) usually lets the provider choice follow the first slice.
+Mock-first services (`docs/EXECUTION.md`) usually let the provider choice
+follow the first slice.
 
 ## 5. Documents and update cadence
 
@@ -149,40 +150,15 @@ you to start coding.
 
 ## 7. After approval
 
-Architecture alignment → app shell (navigation, theme, brand) → first
-meaningful vertical slice (one end-to-end user experience on mock services) →
-validation (`npm run check`, both color schemes, loading/empty/error states) →
-remaining screens and features → real backend integration. Set `IMPLEMENTING`
-when the first product code lands. Do not build the whole application in one
-uncontrolled pass. All engineering rules in `AGENTS.md` apply unchanged.
+Implementation is defined in `docs/EXECUTION.md`, including the Blueprint →
+code mapping; this file does not repeat it. In short: architecture alignment →
+production app shell from `FLOWS.md` → first meaningful vertical slice (with
+its service contract and mock when that slice needs persistence) → validation
+→ remaining features on the proven pattern → real backend integration. Set
+`IMPLEMENTING` when the first product code lands. All engineering rules in
+`AGENTS.md` apply unchanged.
 
-## 8. Blueprint → code mapping
-
-| Blueprint output | Lands in |
-| --- | --- |
-| Screen map, navigation | `app/`: tab roots in `app/(tabs)/`, detail and full-screen flows on the root stack, shell in `_layout.tsx`; confirmations via `Modal`, forms and pickers via `BottomSheet` inside screens |
-| Product features | `src/features/<feature>/` with `components/`, `hooks/`, `types.ts`, optional `screens/` |
-| Visual direction | `src/theme/brand.ts` first; `typography.ts` + `fonts.ts` for type; other semantic tokens in `src/theme/*` with a comment on when to use them |
-| Generic reusable UI | existing `src/components/ui/` first: add a prop or variant, update its Gallery section |
-| Feature-specific UI | `src/features/<feature>/components/`, composed from `ui` primitives |
-| Core entities | `src/features/<feature>/types.ts`; cross-feature types in `src/types/` |
-| Service contracts | `src/services/contracts/` |
-| Mock adapters | `src/services/mock/` |
-| Provider adapters | `src/services/<provider>/` plus `docs/<PROVIDER>.md`, only once a provider is Selected |
-| Auth and session | `src/features/auth/` over an auth contract; never inside UI primitives |
-| App identity, config | `app.json`, `assets/`, `.env` / `.env.example` (`EXPO_PUBLIC_*` only) |
-
-## 9. Mock-first services
-
-UI / feature → stable contract (`src/services/contracts/`) → mock
-implementation (`src/services/mock/`) → provider implementation
-(`src/services/<provider>/`) later. `src/services/index.ts` exports the active
-implementation and feature hooks import from `@/services` only, so replacing
-mock data with Firebase, Supabase or an API never touches UI. Apply this
-boundary where real persistence or backend behaviour exists; do not abstract
-tiny local features. Details: `src/services/README.md`.
-
-## 10. Resuming in a new session
+## 8. Resuming in a new session
 
 Read the status line → Selected decisions and open questions in `PRODUCT.md` →
 relevant docs → relevant code → continue from the current stage. Never re-ask
@@ -192,13 +168,13 @@ an answered question; never restart discovery because your context is fresh.
 | --- | --- |
 | `TEMPLATE` | If a product idea is introduced, start discovery. Otherwise this is the bare starter. |
 | `DISCOVERY` | Continue from the unresolved areas only. |
-| `BLUEPRINT_APPROVED` | Do not reopen discovery; proceed with §7. |
-| `IMPLEMENTING` | Inspect what exists, then continue the §7 sequence. |
+| `BLUEPRINT_APPROVED` | Do not reopen discovery; proceed with `docs/EXECUTION.md`. |
+| `IMPLEMENTING` | Inspect what exists, then continue the sequence in `docs/EXECUTION.md`. |
 | `BACKEND_INTEGRATION` | Continue provider work per `BACKEND.md` and `docs/<PROVIDER>.md`. |
 | `RELEASE_PREP` | Validation, builds, store readiness. |
 | `SHIPPED` | An existing product: normal maintenance and feature work. |
 
-## 11. Anti-patterns
+## 9. Anti-patterns
 
 - Fixed questionnaires; asking what is obvious or about implementation trivia.
 - Blocking progress over insignificant decisions; prolonging discovery for completeness.
