@@ -9,33 +9,55 @@ dist/
 web-build/
 expo-env.d.ts
 
-# Native
+# Native (managed workflow — regenerate with `npx expo prebuild`)
+/ios
+/android
 .kotlin/
 *.orig.*
+
+# Signing / credentials — never commit
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
+*.pem
+google-services.json
+GoogleService-Info.plist
+**/firebase-adminsdk*.json
+**/serviceAccount*.json
+
+# EAS / build artifacts
+*.apk
+*.aab
+*.ipa
+*.app
+eas-build-*/
 
 # Metro
 .metro-health-check*
 
-# debug
+# Environment — keep the template, ignore real values
+.env
+.env.*
+!.env.example
+
+# Debug / logs
 npm-debug.*
 yarn-debug.*
 yarn-error.*
+*.log
 
-# macOS
-.DS_Store
-*.pem
+# Tests
+coverage/
 
-# local env files
-.env*.local
-
-# typescript
+# TypeScript
 *.tsbuildinfo
 
-# generated native folders
-/ios
-/android
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+Thumbs.db
