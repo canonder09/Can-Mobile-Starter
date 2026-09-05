@@ -171,7 +171,7 @@ an answered question; never restart discovery because your context is fresh.
 | `BLUEPRINT_APPROVED` | Do not reopen discovery; proceed with `docs/EXECUTION.md`. |
 | `IMPLEMENTING` | Inspect what exists, then continue the sequence in `docs/EXECUTION.md`. |
 | `BACKEND_INTEGRATION` | Continue provider work per `BACKEND.md` and `docs/<PROVIDER>.md`. |
-| `RELEASE_PREP` | Validation, builds, store readiness. |
+| `RELEASE_PREP` | Release preparation per `docs/RELEASE.md`. |
 | `SHIPPED` | An existing product: normal maintenance and feature work. |
 
 ## 9. Anti-patterns

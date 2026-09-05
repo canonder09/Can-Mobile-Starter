@@ -88,5 +88,10 @@ When builds move to EAS, each build profile gets its `EXPO_PUBLIC_*` values
 from EAS environment variables, and anything sensitive to the build process
 (signing, tokens) from EAS secrets. The rule does not change: `EXPO_PUBLIC_*`
 stays public even there, and `src/config/env.ts` stays the only reader.
+Profiles map to environments only where those environments exist; a product
+without staging has no preview values to map. The real-project setup flow is
+in `docs/RELEASE.md` §8. The project ID that EAS writes into `app.json` is a
+public identifier, not app configuration; it does not reopen `extra` as a
+configuration source.
 
 Reference: https://docs.expo.dev/guides/environment-variables/

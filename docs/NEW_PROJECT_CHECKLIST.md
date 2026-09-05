@@ -8,7 +8,7 @@ around that. `Project Status` in `docs/PRODUCT.md` tracks where you are.
 
 - [ ] GitHub → **Use this template**, then clone. (Or copy the folder without `node_modules`, `.expo`, `.git` and `git init`.)
 - [ ] `package.json` → `name`
-- [ ] `app.json` → `name`, `slug`, `scheme`, `ios.bundleIdentifier`, `android.package`, `version`
+- [ ] `app.json` → `name`, `slug`, `scheme`, `ios.bundleIdentifier`, `android.package`, `version`. The starter's `com.example.canmobilestarter` values are placeholders: replace them with reverse-DNS identifiers you control; this must be done before release (`docs/RELEASE.md` §1).
 - [ ] Replace `assets/icon.png`, `assets/splash-icon.png`, `assets/android-icon-*.png`, `assets/favicon.png`
 - [ ] Update the splash background colors in `app.json` if the brand background differs
 - [ ] `npm install`
@@ -55,9 +55,19 @@ around that. `Project Status` in `docs/PRODUCT.md` tracks where you are.
 - [ ] Auth as a feature (`src/features/auth`) over an auth contract, not inside UI primitives.
 - [ ] Persist the theme preference (AsyncStorage or profile) if the app exposes it.
 
-## 8. Release prep — status `RELEASE_PREP`, then `SHIPPED`
+## 8. Auth — only if the product requires identity (`docs/AUTH.md`)
 
-- [ ] `npx expo-doctor`, `npm run check`
-- [ ] `npx expo prebuild` only if you need native customization; otherwise stay managed.
-- [ ] EAS: `eas init`, `eas build:configure`; keep `eas.json` profiles committed, credentials out of git.
+- [ ] Decide and record in `BACKEND.md`: identity model, methods, provider, roles, account lifecycle and deletion.
+- [ ] Build it as a slice in the same services convention: `contracts/auth.ts` → provider implementation → `index.ts` → `src/features/auth/`; gating in the app shell with the current Expo Router mechanism.
+- [ ] Authorization lives in backend/provider rules; route protection is UX only.
+
+## 9. Release prep — status `RELEASE_PREP`, then `SHIPPED` (`docs/RELEASE.md`)
+
+- [ ] No `com.example.*` identifier remains; name, slug, scheme, version and build numbers are final.
+- [ ] Production configuration per `docs/ENVIRONMENT.md`; no secret in git, nothing private in `EXPO_PUBLIC_*`.
+- [ ] Permissions, deep links and native config reviewed: only what the product uses; `npx expo prebuild` only if native customization requires it.
+- [ ] Quality gate: `npm run check`, `npx expo-doctor`, production build, device smoke tests on iOS and Android, critical journey, auth flows if any.
+- [ ] Privacy review, policy URL, store privacy and data-safety declarations reflect actual behaviour; account-deletion path if accounts exist.
+- [ ] EAS initialized and configured in the real project per `docs/RELEASE.md` §8 (current official flow); `eas.json` committed only after review; credentials never in git.
 - [ ] Review `.gitignore` for any new secret file types.
+- [ ] Staged testing (internal build → TestFlight / Play testing) → submission → confirmed live → `SHIPPED`.

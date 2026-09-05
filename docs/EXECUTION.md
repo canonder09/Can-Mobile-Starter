@@ -65,6 +65,9 @@ They are not a default information architecture.
   `src/features/gallery` is not deleted to achieve it.
 - Screens keep the starter conventions: `<Screen>` with `<Header>`, stack
   headers hidden, detail and full-screen flows on the root stack.
+- If the product requires identity, the shell also follows `docs/AUTH.md` §7:
+  no shell renders while the session is resolving, and gating uses the
+  mechanism the installed Expo Router version supports.
 
 ## 4. First vertical slice
 
@@ -137,6 +140,9 @@ other real infrastructure. A feature existing is not a reason for one.
   only. Plain TypeScript, no DI framework, container or registry. The file is
   created together with the first real contract, not before. Folder details
   and an example are in `src/services/README.md`.
+- Authentication, when the product needs it, is a service like any other:
+  `contracts/auth.ts`, a provider implementation, `index.ts`, hooks in
+  `src/features/auth/`. Decisions and details: `docs/AUTH.md`.
 
 ## 8. Mock usage
 
@@ -184,7 +190,7 @@ loading / empty / error / disabled states render, persistence behaves,
 permissions hold, accessibility basics are met, and it looks right on iOS and
 Android. Guidance, not bureaucracy.
 
-## 11. Readiness for real backend integration
+## 11. Readiness for backend integration and release
 
 The app is ready for `BACKEND_INTEGRATION` when contracts are stable and used
 by the features, mocks cover the real states, UI consumes domain objects only,
@@ -193,3 +199,8 @@ and configuration flows through `src/config/env.ts`. Then follow
 `src/services/<provider>/`, switch it in `src/services/index.ts`, document the
 provider in `docs/<PROVIDER>.md`, and set `Project Status: BACKEND_INTEGRATION`.
 UI and hooks should not change.
+
+When the product is feature-complete for its intended release, deliberate
+release preparation begins: set `Project Status: RELEASE_PREP` and follow
+`docs/RELEASE.md` (real identifiers, production configuration, EAS, store
+readiness). `SHIPPED` only when the production release is live.

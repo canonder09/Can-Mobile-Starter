@@ -20,7 +20,9 @@ mock → provider) is in `src/services/README.md`.
 product. `docs/KICKOFF.md` describes how an agent fills them in;
 `docs/EXECUTION.md` describes how an approved Blueprint maps onto the folders
 below and becomes code; `docs/ENVIRONMENT.md` covers configuration and
-secrets. Read the status line before touching code in a new session.
+secrets; `docs/AUTH.md` applies only when the product needs identity;
+`docs/RELEASE.md` owns build, store and release readiness. Read the status
+line before touching code in a new session.
 
 ## Folder layout
 

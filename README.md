@@ -20,6 +20,10 @@ both color schemes. Toggle the scheme in **Settings**.
 
 ## Starting a new app with an AI agent
 
+template → idea → adaptive discovery → Blueprint approval → implementation
+(`EXECUTION.md`) → auth only if required (`AUTH.md`) → real backend →
+release preparation (`RELEASE.md`) → store
+
 1. Create a repository from this template (GitHub → **Use this template**) and clone it.
 2. Open it in Claude Code, Codex, Cursor or any other agent that reads `AGENTS.md`.
 3. Say what you want, in your own language:
@@ -38,6 +42,12 @@ design system (with its service contract and mock when the slice needs
 persistence), validates it, then repeats the pattern for the rest. Backend
 providers come later, behind that service boundary. Configuration and secrets
 follow `docs/ENVIRONMENT.md`.
+
+Accounts are not assumed: `docs/AUTH.md` is consulted only when the product
+needs identity, and auth goes through the same service boundary. When the
+product is ready, `docs/RELEASE.md` drives release preparation. EAS, store
+accounts and real identifiers are configured in the real project, never in
+this template.
 
 - **Skip it:** say "Skip discovery and implement this." The agent starts coding
   and records only the minimum context.
@@ -67,8 +77,8 @@ src/services/         contracts/ · mock/ · <provider>/ — empty until the pro
 src/config/           env.ts — public runtime config, the only reader of EXPO_PUBLIC_*
 src/hooks | lib | utils | types
 docs/                 KICKOFF · PRODUCT · FLOWS · DESIGN_DIRECTION · DATA_MODEL · BACKEND
-                      EXECUTION · ENVIRONMENT · DESIGN_SYSTEM · ARCHITECTURE · COMPONENTS
-                      NEW_PROJECT_CHECKLIST
+                      EXECUTION · ENVIRONMENT · AUTH · RELEASE · DESIGN_SYSTEM · ARCHITECTURE
+                      COMPONENTS · NEW_PROJECT_CHECKLIST
 AGENTS.md             rules for AI agents (Claude Code, Codex, Cursor); CLAUDE.md references it
 ```
 

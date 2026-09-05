@@ -15,8 +15,8 @@ resume from each value.
 | `BLUEPRINT_APPROVED` | The user explicitly approved the Project Blueprint. |
 | `IMPLEMENTING` | Product code is being built. |
 | `BACKEND_INTEGRATION` | A real backend or provider is being wired in. |
-| `RELEASE_PREP` | Preparing builds, store listings and release checks. |
-| `SHIPPED` | Released. Treat as an existing product. |
+| `RELEASE_PREP` | Deliberate release preparation: real identifiers, production configuration, store builds, metadata, final validation (`docs/RELEASE.md`). |
+| `SHIPPED` | The production release is actually live for users. Treat as an existing product. |
 
 Change the status only at these transitions, never for trivial edits.
 Mark items below **Proposed**, **Selected** or **Deferred**.

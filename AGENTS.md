@@ -23,7 +23,7 @@ This file is the single source of truth for how to work in this project.
 | `src/services/` | Data access behind contracts: `contracts/` (interfaces), `mock/` (first implementation), `<provider>/` (real backend, when chosen). Empty until the product needs persistence. |
 | `src/hooks/`, `src/lib/`, `src/utils/`, `src/types/` | Shared, non-visual helpers. |
 | `src/config/` | Public runtime configuration. `env.ts` is the only file that reads `EXPO_PUBLIC_*` (see `docs/ENVIRONMENT.md`). |
-| `docs/` | Design system, architecture, components, checklist; product docs (`PRODUCT`, `FLOWS`, `DESIGN_DIRECTION`, `DATA_MODEL`, `BACKEND`), discovery (`KICKOFF`), implementation (`EXECUTION`) and configuration (`ENVIRONMENT`). |
+| `docs/` | Design system, architecture, components, checklist; product docs (`PRODUCT`, `FLOWS`, `DESIGN_DIRECTION`, `DATA_MODEL`, `BACKEND`), discovery (`KICKOFF`), implementation (`EXECUTION`), configuration (`ENVIRONMENT`), identity (`AUTH`) and release (`RELEASE`). |
 
 ## Project Kickoff Protocol
 
@@ -72,11 +72,11 @@ and is the first thing to read in any new session.
 - The starter tabs (Home, Gallery, Settings) are a development reference, not
   the product's information architecture. Rebuild the app shell from
   `FLOWS.md`; keep the Gallery in the repo but out of production navigation.
-- Start with one meaningful vertical slice from the Blueprint, not every
-  screen. Validate it (`npm run check`, bundle, device smoke test, both color
-  schemes, all states) before scaling the pattern to the remaining features.
+- Start with one meaningful vertical slice, not every screen. Validate it
+  (`npm run check`, bundle, device smoke test, both color schemes, all states)
+  before scaling the pattern to the remaining features.
 - If that slice needs persistence, define its feature types, service contract
-  and mock as part of building it — not UI first and a retrofit later. If it
+  and mock as part of building it, never UI first and a retrofit later. If it
   does not, add no contract: local-only stays local-only.
 - Persistence boundaries exist only where real data, a backend, device storage
   or an external API is involved. Contracts are domain-specific
@@ -84,10 +84,20 @@ and is the first thing to read in any new session.
 - Feature and UI code never import a provider SDK and never see provider
   objects; it consumes plain domain types through `@/services`. Provider
   failures become app-meaningful errors at the service boundary.
-- Prefer mocks when they let the UX be built and reviewed before the backend
-  exists; they are a tool, not a requirement, and their data never ships.
-- Public configuration is read only through `src/config/env.ts`. Details in
-  `docs/EXECUTION.md` and `docs/ENVIRONMENT.md`.
+- Mocks are a tool, not a requirement: use them when they let the UX be built
+  before the backend exists; their data never ships.
+- Authentication exists only when the approved product needs identity; then
+  follow `docs/AUTH.md`. Identity, session, onboarding and authorization are
+  separate concerns, never one `isLoggedIn` flag. Auth goes through the same
+  service convention (`contracts/auth.ts` → provider → `index.ts` →
+  `src/features/auth/`). Protected navigation is UX gating; authorization is
+  enforced by the backend or provider.
+- When deliberate release preparation begins, follow `docs/RELEASE.md` and set
+  `RELEASE_PREP`; `SHIPPED` only when the production release is live. Verify
+  current Apple, Google, Expo and provider requirements at that time. Never
+  commit credentials, private secrets or accidental real store identifiers.
+- Public configuration is read only through `src/config/env.ts`
+  (`docs/ENVIRONMENT.md`); `EXPO_PUBLIC_*` is public.
 
 ## Rules
 

@@ -9,7 +9,7 @@ can follow the first vertical slice built on mock services.
 Mark each item **Proposed**, **Selected** or **Deferred**.
 
 ## Authentication
-_Is auth required before the first meaningful action? Which methods? Guest mode? Not yet defined._
+_Is identity required at all, and if so before the first meaningful action? Which methods? Anonymous or guest mode? Decide with `docs/AUTH.md`. The auth provider usually follows the backend provider below but may differ; record both. Not yet defined._
 
 ## Provider
 _Which backend, why, and what was considered. Not yet defined._
@@ -19,7 +19,7 @@ _Which backend, why, and what was considered. Not yet defined._
 | Contract (`src/services/contracts/`) | Responsibility | Mock | Provider |
 | --- | --- | --- | --- |
 
-_One row per real persistence or backend behaviour. Local UI state does not get a contract._
+_One row per real persistence or backend behaviour. Local UI state does not get a contract. Auth, when required, is one row (`auth`)._
 
 ## Realtime
 _What must update live, if anything. Not yet defined._
@@ -40,7 +40,7 @@ _What is measured, why, and consent. Not yet defined._
 _What works without a connection; conflict expectations. Not yet defined._
 
 ## Security and privacy
-_Sensitive data, access rules, data residency, deletion. Not yet defined._
+_Sensitive data, access rules (authorization is enforced here, not in the client), data residency, retention and deletion obligations. Not yet defined._
 
 ## Provider documentation
 _When a provider is Selected, create `docs/<PROVIDER>.md` (for example `docs/FIREBASE.md`) with configuration, data mapping and rules. Not before._
